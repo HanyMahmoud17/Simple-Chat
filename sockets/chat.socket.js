@@ -12,5 +12,11 @@ module.exports= io =>{
             })
 
         })
+        socket.on('reqPeerId',chatId=>{
+            socket.broadcast.to(chatId).emit('getPeerId')
+        })
+        socket.on('sendPeerId',data=>{
+            socket.broadcast.to(data.chatId).emit('recievePeerId',data.peerId)
+        })
     })
 }

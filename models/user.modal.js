@@ -47,8 +47,12 @@ exports.getUserData = (id) => {
 exports.sendFriendRequest= async (data)=> {
     // console.log("data".data);
     try{
-        await User.updateOne({_id: data.friendId}, {$push: {friendRequests:{name:data.myName,id:data.myId}}});
-        await User.updateOne({_id: data.myId}, {$push: {sentRequests:{name:data.friendName,id:data.friendId}}});
+        await Promise.all([
+             User.updateOne({_id: data.friendId}, {$push: {friendRequests:{name:data.myName,id:data.myId}}}),
+         User.updateOne({_id: data.myId}, {$push: {sentRequests:{name:data.friendName,id:data.friendId}}})
+        ])
+        // await User.updateOne({_id: data.friendId}, {$push: {friendRequests:{name:data.myName,id:data.myId}}});
+        // await User.updateOne({_id: data.myId}, {$push: {sentRequests:{name:data.friendName,id:data.friendId}}});
         return;
     } catch(err){
         throw new Error(err)
@@ -57,9 +61,12 @@ exports.sendFriendRequest= async (data)=> {
 };
 exports.cancelFriendRequest=async (data)=> {
     try{
-
-        await User.updateOne({_id: data.friendId}, {$pull: {friendRequests:{id:data.myId}}});
-        await User.updateOne({_id: data.myId}, {$pull: {sentRequests:{id:data.friendId}}});
+        await Promise.all([
+             User.updateOne({_id: data.friendId}, {$pull: {friendRequests:{id:data.myId}}}),
+             User.updateOne({_id: data.myId}, {$pull: {sentRequests:{id:data.friendId}}})
+        ])
+        // await User.updateOne({_id: data.friendId}, {$pull: {friendRequests:{id:data.myId}}});
+        // await User.updateOne({_id: data.myId}, {$pull: {sentRequests:{id:data.friendId}}});
         return;
     } catch(err){
         throw new Error(err)
@@ -74,10 +81,16 @@ exports.acceptFriendRequest=async (data)=> {
         })
         let chatDoc=await newChat.save()
 
-        await User.updateOne({_id: data.friendId}, {$push: {friends:{name:data.myName,id:data.myId,image:data.myImage,chatId:chatDoc._id}}});
-        await User.updateOne({_id: data.myId}, {$push: {friends:{name:data.friendName,id:data.friendId,image:data.friendImage,chatId:chatDoc._id}}});
-        await User.updateOne({_id: data.friendId}, {$pull: {sentRequests:{id:data.myId}}});
-        await User.updateOne({_id: data.myId}, {$pull: {friendRequests:{id:data.friendId}}});
+        await Promise.all([
+            User.updateOne({_id: data.friendId}, {$push: {friends:{name:data.myName,id:data.myId,image:data.myImage,chatId:chatDoc._id}}}),
+            User.updateOne({_id: data.myId}, {$push: {friends:{name:data.friendName,id:data.friendId,image:data.friendImage,chatId:chatDoc._id}}}),
+            User.updateOne({_id: data.friendId}, {$pull: {sentRequests:{id:data.myId}}}),
+            User.updateOne({_id: data.myId}, {$pull: {friendRequests:{id:data.friendId}}})
+        ])
+        // await User.updateOne({_id: data.friendId}, {$push: {friends:{name:data.myName,id:data.myId,image:data.myImage,chatId:chatDoc._id}}});
+        // await User.updateOne({_id: data.myId}, {$push: {friends:{name:data.friendName,id:data.friendId,image:data.friendImage,chatId:chatDoc._id}}});
+        // await User.updateOne({_id: data.friendId}, {$pull: {sentRequests:{id:data.myId}}});
+        // await User.updateOne({_id: data.myId}, {$pull: {friendRequests:{id:data.friendId}}});
         return;
     } catch(err){
         throw new Error(err)
@@ -86,8 +99,11 @@ exports.acceptFriendRequest=async (data)=> {
 };
 exports.rejectFriendRequest=async (data)=> {
     try{
-        await User.updateOne({_id: data.friendId}, {$pull: {sentRequests:{id:data.myId}}});
-        await User.updateOne({_id: data.myId}, {$pull: {friendRequests:{id:data.friendId}}});
+        await Promise.all([
+            User.updateOne({_id: data.friendId}, {$pull: {sentRequests:{id:data.myId}}}),
+            User.updateOne({_id: data.myId}, {$pull: {friendRequests:{id:data.friendId}}})
+        ])
+
         return;
     } catch(err){
         throw new Error(err)
@@ -96,8 +112,11 @@ exports.rejectFriendRequest=async (data)=> {
 };
 exports.deleteFriendRequest=async (data)=> {
     try{
-        await User.updateOne({_id: data.friendId}, {$pull: {friends:{id:data.myId}}});
-        await User.updateOne({_id: data.myId}, {$pull: {friends:{id:data.friendId}}});
+        await Promise.all([
+            User.updateOne({_id: data.friendId}, {$pull: {friends:{id:data.myId}}}),
+            User.updateOne({_id: data.myId}, {$pull: {friends:{id:data.friendId}}})
+        ])
+
         return;
     } catch(err){
         throw new Error(err)

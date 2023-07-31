@@ -84,7 +84,7 @@ const { request } = require('http');
 app.use('/', authRouter)
 app.use('/profile', profileRouter)
 app.use('/friend', friendRouter)
-app.use('/home', homeRouter)
+app.use('/', homeRouter)
 app.use('/chat', chatRouter)
 
 

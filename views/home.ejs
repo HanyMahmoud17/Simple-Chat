@@ -1,7 +1,77 @@
 <%- include('parts/header')%>
 <%- include('parts/navbar')%>
+<head>
+    <style>
+        .online-friend {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  padding-top: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #f5f5f5;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* chat div */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.col {
+  flex-basis: calc(100% / 5 - 10px);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: ##eee;
+  padding: 10px;
+}
+
+.col img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.col h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.col h3 a{
+    text-decoration: none;
+}
+
+.col a.btn {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.col a.btn:hover {
+  background-color: #218838;
+}
+    </style>
+</head>
 
 <div class="container">
+    <h1 class="online-friend">Online Friends</h1>
 <div id="onlineFriends">
     
 </div>

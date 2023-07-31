@@ -167,6 +167,7 @@
             <a href="/profile/<%= friendData.id %>">
                 <%= friendData.username %>
             </a>
+            <button class="btn btn-success" id="callBtn">Video Call</button>
         </div>
 
         <div class="col col-12 col-md-9 messages chat-body">
@@ -203,6 +204,7 @@
 
 <%- include('parts/scripts') %>
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
 <script src="/js/sockets/init.js"></script>
 <script src="/js/sockets/chat.js"></script>
 <script>

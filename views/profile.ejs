@@ -1,0 +1,42 @@
+<%- include('parts/header')%>
+<%- include('parts/navbar')%>
+
+<div class="container">
+<div class="row">
+    <div class="col col-12 col-md-4">
+        <img src="/<%= friendImage%>" alt="">
+    </div>
+    <div class="col col-12 col-md-6">
+        <h3><%= friendName%></h3>
+
+        <% if(!isOwner){%>
+            <form method="post" id="friend-form">
+                <input id="myId" type="hidden" name="myId" value="<%= myId%>">
+                <input id="myName" type="hidden" name="myName" value="<%= myName%>">
+                <input id="myImage" type="hidden" name="myImage" value="<%= myImage%>">
+                <input id="friendId" type="hidden" name="friendId" value="<%= friendId%>">
+                <input id="friendImage" type="hidden" name="friendImage" value="<%= friendImage%>">
+                <input id="friendName" type="hidden" name="friendName" value="<%= friendName%>">
+                <% if(isFriends){%>
+                    <input type="submit" class="btn btn-danger" value="Delete Friend" formaction="/friend/dalete">
+                <% } else if(isFriendRequestSend){%>
+                    <input type="submit" class="btn btn-danger" value="Cancel Friend" formaction="/friend/cancel">
+                <%} else if(isFriendRequestRecieve){%>
+                    <input type="submit" class="btn btn-success" value="Accept" formaction="/friend/accept">
+                    <input type="submit" class="btn btn-danger" value="Reject" formaction="/friend/reject">
+                <%}else{%>
+                    <input id="addFriend" type="submit" class="btn btn-primary" value="Add Friend">
+                <% }%>
+            </form>
+        <%}%>
+    </div>
+</div>
+</div>
+<%- include('parts/scripts')%>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets/init.js"></script>
+<% if(!isOwner && !isFriends && !isFriendRequestSend && !isFriendRequestRecieve){%>
+    <script src="/js/sockets/friend.js"></script>
+<%}%>
+</body>
+</html>

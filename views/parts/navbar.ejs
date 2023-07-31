@@ -1,0 +1,63 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link <%= pageTitle==='Home' ? 'active' : ''%>" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <% if(isUser) {%>
+                        <li class="nav-item">
+                            <a class="nav-link <%= pageTitle==='Groups' ? 'active' : ''%>" href="/groups">Groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= pageTitle==='Friends' ? 'active' : ''%>" href="/friends">Friends</a>
+                        </li>
+                    <%} else {%>
+                        <li class="nav-item">
+                            <a class="nav-link <%= pageTitle==='login' ? 'active' : ''%>" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <%= pageTitle==='signup' ? 'active' : ''%>" href="/signup">Signup</a>
+                        </li>
+                    <%}%>
+                    
+                    
+                </ul>
+                <% if(isUser) {%>
+                    <input type="hidden" id="userId" value="<%= isUser%>">
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle" type="button" id="FriendReqs" data-bs-toggle="dropdown" aria-expanded="false">
+                          FriendReqs
+                        </button>
+                        <ul id="friendRequests" class="dropdown-menu" aria-labelledby="FriendReqs">
+                            <% if(friendRequests.length==0){%>
+                                
+                                <span class="dropdown-item">
+                                    no friend requests
+                                </span>
+                            <%}%>
+                            <% for( let request of friendRequests) {%>
+                            
+                                <li><a class="dropdown-item" href="/profile/<%= request.id%>">
+                                    <%= request.name%>
+                                </a></li>
+                            <%}%>
+                        </ul>
+                      </div>
+                    
+                <form action="/logout" method="post">
+                    <input type="submit" value="Logout" class="btn btn-danger">
+                </form>
+                <%}%>
+            </div>
+        </div>
+    </div>
+</nav>
